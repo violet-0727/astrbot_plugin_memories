@@ -1,0 +1,46 @@
+name: astrbot_plugin_memories
+display_name: 她自己的小回忆
+short_desc: 记住有分量的事件，用「蛋糕」记录正负反馈；聊到时会自己想起来。
+desc: |-
+  一个完全独立的事件记忆插件，不依赖也不修改任何其它插件。
+
+  她可以把有分量的事写进自己的小回忆：第一次、约定、被认真对待或被伤到的时刻。
+  每条回忆带一个「蛋糕值」：让她开心就加，让她难受就减。分量越重，越容易被想起来。
+
+  三个工具：memory_note 记住、memory_feedback 加/减蛋糕、memory_recall 想起来。
+  她还会按人名召回、在没聊到任何回忆时偶尔「忽然想起」一件事（每天最多一次）。
+
+  自带管理页两页：
+  · 回忆总览 —— 浏览、搜索、加减蛋糕、编辑、删除
+  · 人物 —— 按 QQ 号归类的回忆，保证每条回忆都对得上人
+  · 回忆阈值 —— 记住的风格、频率、遗忘（概率/天数/阈值）、整合（相似度/组数）、注入条数与苦味权重
+  · 纪念日 —— 按「发生日期」列出今天/近期周年，聊天里到日子她会自己想起来
+
+  存储是一个 JSONL 文件，坏一行只丢一行；检索用字符二元组，不依赖向量库。
+help: |-
+  管理命令：
+  - 回忆（看统计）
+  - 回忆 甜 / 回忆 苦
+  - 回忆 搜 关键词
+  - 回忆 删 id
+
+  模型工具：memory_note / memory_feedback / memory_recall
+
+  面板页：插件管理 → 她自己的小回忆 → 回忆总览 / 回忆阈值
+version: 0.4.1
+author: 若剑清
+repo: ""
+astrbot_version: ">=4.22,<5"
+support_platforms:
+  - aiocqhttp
+  - qq_official
+  - telegram
+  - lark
+tags:
+  - memory
+  - emotion
+  - companion
+  - event
+pages:
+  - name: memories-panel
+    title: 小回忆

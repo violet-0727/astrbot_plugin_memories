@@ -1,0 +1,17 @@
+{
+  "enabled": {
+    "type": "bool",
+    "description": "总开关。关掉后工具和自动注入都不生效，数据保留。",
+    "default": true
+  },
+  "inject_enabled": {
+    "type": "bool",
+    "description": "聊天时是否自动把相关的回忆带进上下文。",
+    "default": true
+  },
+  "inject_limit_note": {
+    "type": "string",
+    "description": "其余阈值（记住风格/频率/遗忘/整合/注入条数/苦味权重）在面板「回忆阈值」页调整，存在插件自己的 settings.json。",
+    "default": ""
+  }
+}
