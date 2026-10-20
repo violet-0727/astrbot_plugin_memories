@@ -27,7 +27,7 @@ help: |-
   模型工具：memory_note / memory_feedback / memory_recall
 
   面板页：插件管理 → 她自己的小回忆 → 回忆总览 / 回忆阈值
-version: 0.4.1
+version: 0.5.1
 author: 若剑清
 repo: ""
 astrbot_version: ">=4.22,<5"

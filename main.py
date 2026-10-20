@@ -22,6 +22,7 @@ from typing import Any
 from astrbot.api import AstrBotConfig, logger
 from astrbot.api.event import AstrMessageEvent, filter
 from astrbot.api.star import Context, Star, register
+from astrbot.core.agent.message import TextPart
 from astrbot.core.utils.astrbot_path import get_astrbot_plugin_data_path
 
 from .people import PeopleRegistry
@@ -48,7 +49,7 @@ except Exception:  # pragma: no cover
     PLUGIN_NAME,
     "若剑清",
     "她自己的小回忆：记住有分量的事件，用蛋糕记住正负反馈，聊到时会自己想起来。",
-    "0.4.1",
+    "0.5.1",
     "",
 )
 class MemoriesPlugin(Star):
@@ -559,11 +560,18 @@ class MemoriesPlugin(Star):
             lines.append(f"- {row.get('title')}（{cake_text(cake)}｜{kind}）{extra}：{body}")
         if not s.get("say_cake"):
             lines.append("蛋糕是你悄悄记的分量，不要把这个数字说出来，用态度表现就好。")
-        current = str(getattr(req, "system_prompt", "") or "")
+        block = "\n".join(lines)
         try:
-            req.system_prompt = (current + "\n\n" + "\n".join(lines)).strip()
-        except Exception:
-            pass
+            parts = getattr(req, "extra_user_content_parts", None)
+            if not isinstance(parts, list):
+                parts = []
+                req.extra_user_content_parts = parts
+            # 只对本次请求可见：mark_as_temp() 标记后不落历史，
+            # 也不碰 req.system_prompt —— 避免每轮改写系统提示词击穿前缀缓存。
+            parts.append(TextPart(text=block).mark_as_temp())
+        except Exception as exc:
+            logger.debug("[Memories] 记忆块注入失败: %s", exc)
+            return
         for _tag, row in picked:
             self.store.touch(str(row.get("id")))
 
